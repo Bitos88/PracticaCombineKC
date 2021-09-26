@@ -8,13 +8,31 @@
 import SwiftUI
 
 struct MainView: View {
+    
+    @EnvironmentObject var herosViewModel : ViewModelHeros
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        switch herosViewModel.status {
+        case Status.none:
+            Text("estado None")
+        case Status.loading:
+            Text("estado loading")
+
+        case Status.loaded:
+            HeroesView()
+
+        case Status.error(error: let errorcadena):
+            Text("Error: \(errorcadena)" )
+
+        }
+        
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
+            .environmentObject(ViewModelHeros())
     }
 }
